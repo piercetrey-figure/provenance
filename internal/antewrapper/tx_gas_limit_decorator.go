@@ -7,7 +7,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const gasTxLimit uint64 = 4_000_000
+const gasTxLimit uint64 = 40_000_000
 
 // TxGasLimitDecorator will check if the transaction's gas amount is higher 4,000,000.
 // If gas is too high, decorator returns error and tx is rejected from mempool.
