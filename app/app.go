@@ -710,44 +710,80 @@ func New(
 	// must be passed by reference here.
 
 	app.mm = module.NewManager(
-		genutil.NewAppModule(app.AccountKeeper, app.StakingKeeper, app.BaseApp.DeliverTx, encodingConfig.TxConfig),
-		auth.NewAppModule(appCodec, app.AccountKeeper, nil),
-		vesting.NewAppModule(app.AccountKeeper, app.BankKeeper),
-		bank.NewAppModule(appCodec, app.BankKeeper, app.AccountKeeper),
-		capability.NewAppModule(appCodec, *app.CapabilityKeeper),
-		crisis.NewAppModule(&app.CrisisKeeper, skipGenesisInvariants),
-		// feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry),
-		gov.NewAppModule(appCodec, app.GovKeeper, app.AccountKeeper, app.BankKeeper),
-		mint.NewAppModule(appCodec, app.MintKeeper, app.AccountKeeper, nil),
-		// slashing.NewAppModule(appCodec, app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		upgrade.NewAppModule(app.UpgradeKeeper),
-		// evidence.NewAppModule(app.EvidenceKeeper),
-		params.NewAppModule(app.ParamsKeeper),
-		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// groupmodule.NewAppModule(appCodec, app.GroupKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// quarantinemodule.NewAppModule(appCodec, app.QuarantineKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// sanctionmodule.NewAppModule(appCodec, app.SanctionKeeper, app.AccountKeeper, app.BankKeeper, app.GovKeeper, app.interfaceRegistry),
+		applyActiveModules[module.AppModule](
+			Pair[string, func() module.AppModule]{genutiltypes.ModuleName, func() module.AppModule {
+				return genutil.NewAppModule(app.AccountKeeper, app.StakingKeeper, app.BaseApp.DeliverTx, encodingConfig.TxConfig)
+			}},
+			Pair[string, func() module.AppModule]{authtypes.ModuleName, func() module.AppModule { return auth.NewAppModule(appCodec, app.AccountKeeper, nil) }},
+			Pair[string, func() module.AppModule]{vestingtypes.ModuleName, func() module.AppModule { return vesting.NewAppModule(app.AccountKeeper, app.BankKeeper) }},
+			Pair[string, func() module.AppModule]{banktypes.ModuleName, func() module.AppModule { return bank.NewAppModule(appCodec, app.BankKeeper, app.AccountKeeper) }},
+			Pair[string, func() module.AppModule]{capabilitytypes.ModuleName, func() module.AppModule { return capability.NewAppModule(appCodec, *app.CapabilityKeeper) }},
+			Pair[string, func() module.AppModule]{crisistypes.ModuleName, func() module.AppModule { return crisis.NewAppModule(&app.CrisisKeeper, skipGenesisInvariants) }},
+			Pair[string, func() module.AppModule]{feegrant.ModuleName, func() module.AppModule {
+				return feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{govtypes.ModuleName, func() module.AppModule {
+				return gov.NewAppModule(appCodec, app.GovKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{minttypes.ModuleName, func() module.AppModule { return mint.NewAppModule(appCodec, app.MintKeeper, app.AccountKeeper, nil) }},
+			Pair[string, func() module.AppModule]{slashingtypes.ModuleName, func() module.AppModule {
+				return slashing.NewAppModule(appCodec, app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper)
+			}},
+			Pair[string, func() module.AppModule]{distrtypes.ModuleName, func() module.AppModule {
+				return distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper)
+			}},
+			Pair[string, func() module.AppModule]{stakingtypes.ModuleName, func() module.AppModule {
+				return staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{upgradetypes.ModuleName, func() module.AppModule { return upgrade.NewAppModule(app.UpgradeKeeper) }},
+			Pair[string, func() module.AppModule]{evidencetypes.ModuleName, func() module.AppModule { return evidence.NewAppModule(app.EvidenceKeeper) }},
+			Pair[string, func() module.AppModule]{paramstypes.ModuleName, func() module.AppModule { return params.NewAppModule(app.ParamsKeeper) }},
+			Pair[string, func() module.AppModule]{authz.ModuleName, func() module.AppModule {
+				return authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{group.ModuleName, func() module.AppModule {
+				return groupmodule.NewAppModule(appCodec, app.GroupKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{quarantine.ModuleName, func() module.AppModule {
+				return quarantinemodule.NewAppModule(appCodec, app.QuarantineKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{sanction.ModuleName, func() module.AppModule {
+				return sanctionmodule.NewAppModule(appCodec, app.SanctionKeeper, app.AccountKeeper, app.BankKeeper, app.GovKeeper, app.interfaceRegistry)
+			}},
 
-		// PROVENANCE
-		// metadata.NewAppModule(appCodec, app.MetadataKeeper, app.AccountKeeper),
-		marker.NewAppModule(appCodec, app.MarkerKeeper, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.GovKeeper, app.AttributeKeeper, app.interfaceRegistry),
-		name.NewAppModule(appCodec, app.NameKeeper, app.AccountKeeper, app.BankKeeper),
-		// attribute.NewAppModule(appCodec, app.AttributeKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper),
-		// msgfeesmodule.NewAppModule(appCodec, app.MsgFeesKeeper, app.interfaceRegistry),
-		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		// rewardmodule.NewAppModule(appCodec, app.RewardKeeper, app.AccountKeeper, app.BankKeeper),
-		// triggermodule.NewAppModule(appCodec, app.TriggerKeeper, app.AccountKeeper, app.BankKeeper),
-		oracleModule,
-		// holdmodule.NewAppModule(appCodec, app.HoldKeeper),
+			// PROVENANCE
+			Pair[string, func() module.AppModule]{metadatatypes.ModuleName, func() module.AppModule { return metadata.NewAppModule(appCodec, app.MetadataKeeper, app.AccountKeeper) }},
+			Pair[string, func() module.AppModule]{markertypes.ModuleName, func() module.AppModule {
+				return marker.NewAppModule(appCodec, app.MarkerKeeper, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.GovKeeper, app.AttributeKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{nametypes.ModuleName, func() module.AppModule {
+				return name.NewAppModule(appCodec, app.NameKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{attributetypes.ModuleName, func() module.AppModule {
+				return attribute.NewAppModule(appCodec, app.AttributeKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper)
+			}},
+			Pair[string, func() module.AppModule]{msgfeestypes.ModuleName, func() module.AppModule {
+				return msgfeesmodule.NewAppModule(appCodec, app.MsgFeesKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModule]{wasmtypes.ModuleName, func() module.AppModule {
+				return wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{rewardtypes.ModuleName, func() module.AppModule {
+				return rewardmodule.NewAppModule(appCodec, app.RewardKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{triggertypes.ModuleName, func() module.AppModule {
+				return triggermodule.NewAppModule(appCodec, app.TriggerKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModule]{oracletypes.ModuleName, func() module.AppModule { return oracleModule }},
+			Pair[string, func() module.AppModule]{hold.ModuleName, func() module.AppModule { return holdmodule.NewAppModule(appCodec, app.HoldKeeper) }},
 
-		// IBC
-		ibc.NewAppModule(app.IBCKeeper),
-		ibchooks.NewAppModule(app.AccountKeeper, *app.IBCHooksKeeper),
-		ibctransfer.NewAppModule(*app.TransferKeeper),
-		icqModule,
-		icaModule,
+			// IBC
+			Pair[string, func() module.AppModule]{ibchost.ModuleName, func() module.AppModule { return ibc.NewAppModule(app.IBCKeeper) }},
+			Pair[string, func() module.AppModule]{ibchookstypes.ModuleName, func() module.AppModule { return ibchooks.NewAppModule(app.AccountKeeper, *app.IBCHooksKeeper) }},
+			Pair[string, func() module.AppModule]{ibctransfertypes.ModuleName, func() module.AppModule { return ibctransfer.NewAppModule(*app.TransferKeeper) }},
+			Pair[string, func() module.AppModule]{icqtypes.ModuleName, func() module.AppModule { return icqModule }},
+			Pair[string, func() module.AppModule]{icatypes.ModuleName, func() module.AppModule { return icaModule }},
+		)...,
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -755,81 +791,85 @@ func New(
 	// CanWithdrawInvariant invariant.
 	// NOTE: staking module is required if HistoricalEntries param > 0
 	app.mm.SetOrderBeginBlockers(
-		upgradetypes.ModuleName,
-		capabilitytypes.ModuleName,
-		minttypes.ModuleName,
-		distrtypes.ModuleName,
-		// slashingtypes.ModuleName,
-		// evidencetypes.ModuleName,
-		stakingtypes.ModuleName,
-		ibchost.ModuleName,
-		markertypes.ModuleName,
-		icatypes.ModuleName,
-		// attributetypes.ModuleName,
-		// rewardtypes.ModuleName,
-		// triggertypes.ModuleName,
+		filterActiveModules(
+			upgradetypes.ModuleName,
+			capabilitytypes.ModuleName,
+			minttypes.ModuleName,
+			distrtypes.ModuleName,
+			slashingtypes.ModuleName,
+			evidencetypes.ModuleName,
+			stakingtypes.ModuleName,
+			ibchost.ModuleName,
+			markertypes.ModuleName,
+			icatypes.ModuleName,
+			attributetypes.ModuleName,
+			rewardtypes.ModuleName,
+			triggertypes.ModuleName,
 
-		// no-ops
-		authtypes.ModuleName,
-		banktypes.ModuleName,
-		govtypes.ModuleName,
-		crisistypes.ModuleName,
-		genutiltypes.ModuleName,
-		authz.ModuleName,
-		// group.ModuleName,
-		// feegrant.ModuleName,
-		paramstypes.ModuleName,
-		// msgfeestypes.ModuleName,
-		// metadatatypes.ModuleName,
-		oracletypes.ModuleName,
-		wasm.ModuleName,
-		ibchookstypes.ModuleName,
-		ibctransfertypes.ModuleName,
-		icqtypes.ModuleName,
-		nametypes.ModuleName,
-		vestingtypes.ModuleName,
-		// quarantine.ModuleName,
-		// sanction.ModuleName,
-		// hold.ModuleName,
+			// no-ops
+			authtypes.ModuleName,
+			banktypes.ModuleName,
+			govtypes.ModuleName,
+			crisistypes.ModuleName,
+			genutiltypes.ModuleName,
+			authz.ModuleName,
+			group.ModuleName,
+			feegrant.ModuleName,
+			paramstypes.ModuleName,
+			msgfeestypes.ModuleName,
+			metadatatypes.ModuleName,
+			oracletypes.ModuleName,
+			wasm.ModuleName,
+			ibchookstypes.ModuleName,
+			ibctransfertypes.ModuleName,
+			icqtypes.ModuleName,
+			nametypes.ModuleName,
+			vestingtypes.ModuleName,
+			quarantine.ModuleName,
+			sanction.ModuleName,
+			hold.ModuleName,
+		)...,
 	)
 
 	app.mm.SetOrderEndBlockers(
-		crisistypes.ModuleName,
-		govtypes.ModuleName,
-		stakingtypes.ModuleName,
-		authtypes.ModuleName,
-		icatypes.ModuleName,
-		// group.ModuleName,
-		// rewardtypes.ModuleName,
-		// triggertypes.ModuleName,
+		filterActiveModules(
+			crisistypes.ModuleName,
+			govtypes.ModuleName,
+			stakingtypes.ModuleName,
+			authtypes.ModuleName,
+			icatypes.ModuleName,
+			group.ModuleName,
+			rewardtypes.ModuleName,
+			triggertypes.ModuleName,
 
-		// no-ops
-		vestingtypes.ModuleName,
-		distrtypes.ModuleName,
-		authz.ModuleName,
-		// metadatatypes.ModuleName,
-		oracletypes.ModuleName,
-		nametypes.ModuleName,
-		genutiltypes.ModuleName,
-		ibchost.ModuleName,
-		ibchookstypes.ModuleName,
-		ibctransfertypes.ModuleName,
-		icqtypes.ModuleName,
-		// msgfeestypes.ModuleName,
-		wasm.ModuleName,
-		// slashingtypes.ModuleName,
-		upgradetypes.ModuleName,
-		// attributetypes.ModuleName,
-		capabilitytypes.ModuleName,
-		// evidencetypes.ModuleName,
-		banktypes.ModuleName,
-		minttypes.ModuleName,
-		markertypes.ModuleName,
-		// feegrant.ModuleName,
-		paramstypes.ModuleName,
-		// quarantine.ModuleName,
-		// sanction.ModuleName,
-		// hold.ModuleName,
+			// no-ops
+			vestingtypes.ModuleName,
+			distrtypes.ModuleName,
+			authz.ModuleName,
+			metadatatypes.ModuleName,
+			oracletypes.ModuleName,
+			nametypes.ModuleName,
+			genutiltypes.ModuleName,
+			ibchost.ModuleName,
+			ibchookstypes.ModuleName,
+			ibctransfertypes.ModuleName,
+			icqtypes.ModuleName,
+			msgfeestypes.ModuleName,
+			wasm.ModuleName,
+			slashingtypes.ModuleName,
+			upgradetypes.ModuleName,
+			attributetypes.ModuleName,
+			capabilitytypes.ModuleName,
+			evidencetypes.ModuleName,
+			banktypes.ModuleName,
+			minttypes.ModuleName,
+			markertypes.ModuleName,
+			feegrant.ModuleName,
+			paramstypes.ModuleName,
+			quarantine.ModuleName,
+			sanction.ModuleName,
+			hold.ModuleName,
+		)...,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -838,86 +878,90 @@ func New(
 	// so that other modules that want to create or claim capabilities afterwards in InitChain
 	// can do so safely.
 	app.mm.SetOrderInitGenesis(
-		capabilitytypes.ModuleName,
-		authtypes.ModuleName,
-		banktypes.ModuleName,
-		markertypes.ModuleName,
-		distrtypes.ModuleName,
-		stakingtypes.ModuleName,
-		// slashingtypes.ModuleName,
-		govtypes.ModuleName,
-		minttypes.ModuleName,
-		crisistypes.ModuleName,
-		genutiltypes.ModuleName,
-		// evidencetypes.ModuleName,
-		authz.ModuleName,
-		// group.ModuleName,
-		// feegrant.ModuleName,
-		// quarantine.ModuleName,
-		// sanction.ModuleName,
+		filterActiveModules(
+			capabilitytypes.ModuleName,
+			authtypes.ModuleName,
+			banktypes.ModuleName,
+			markertypes.ModuleName,
+			distrtypes.ModuleName,
+			stakingtypes.ModuleName,
+			slashingtypes.ModuleName,
+			govtypes.ModuleName,
+			minttypes.ModuleName,
+			crisistypes.ModuleName,
+			genutiltypes.ModuleName,
+			evidencetypes.ModuleName,
+			authz.ModuleName,
+			group.ModuleName,
+			feegrant.ModuleName,
+			quarantine.ModuleName,
+			sanction.ModuleName,
 
-		nametypes.ModuleName,
-		// attributetypes.ModuleName,
-		// metadatatypes.ModuleName,
-		// msgfeestypes.ModuleName,
-		// hold.ModuleName,
+			nametypes.ModuleName,
+			attributetypes.ModuleName,
+			metadatatypes.ModuleName,
+			msgfeestypes.ModuleName,
+			hold.ModuleName,
 
-		ibchost.ModuleName,
-		ibctransfertypes.ModuleName,
-		icqtypes.ModuleName,
-		icatypes.ModuleName,
-		ibchookstypes.ModuleName,
-		// wasm after ibc transfer
-		wasm.ModuleName,
-		// rewardtypes.ModuleName,
-		// triggertypes.ModuleName,
-		oracletypes.ModuleName,
+			ibchost.ModuleName,
+			ibctransfertypes.ModuleName,
+			icqtypes.ModuleName,
+			icatypes.ModuleName,
+			ibchookstypes.ModuleName,
+			// wasm after ibc transfer
+			wasm.ModuleName,
+			rewardtypes.ModuleName,
+			triggertypes.ModuleName,
+			oracletypes.ModuleName,
 
-		// no-ops
-		paramstypes.ModuleName,
-		vestingtypes.ModuleName,
-		upgradetypes.ModuleName,
+			// no-ops
+			paramstypes.ModuleName,
+			vestingtypes.ModuleName,
+			upgradetypes.ModuleName,
+		)...,
 	)
 
 	app.mm.SetOrderMigrations(
-		banktypes.ModuleName,
-		authz.ModuleName,
-		// group.ModuleName,
-		capabilitytypes.ModuleName,
-		crisistypes.ModuleName,
-		distrtypes.ModuleName,
-		// evidencetypes.ModuleName,
-		// feegrant.ModuleName,
-		genutiltypes.ModuleName,
-		govtypes.ModuleName,
-		ibchost.ModuleName,
-		minttypes.ModuleName,
-		paramstypes.ModuleName,
-		// slashingtypes.ModuleName,
-		stakingtypes.ModuleName,
-		ibctransfertypes.ModuleName,
-		upgradetypes.ModuleName,
-		vestingtypes.ModuleName,
-		// quarantine.ModuleName,
-		// sanction.ModuleName,
-		// hold.ModuleName,
+		filterActiveModules(
+			banktypes.ModuleName,
+			authz.ModuleName,
+			group.ModuleName,
+			capabilitytypes.ModuleName,
+			crisistypes.ModuleName,
+			distrtypes.ModuleName,
+			evidencetypes.ModuleName,
+			feegrant.ModuleName,
+			genutiltypes.ModuleName,
+			govtypes.ModuleName,
+			ibchost.ModuleName,
+			minttypes.ModuleName,
+			paramstypes.ModuleName,
+			slashingtypes.ModuleName,
+			stakingtypes.ModuleName,
+			ibctransfertypes.ModuleName,
+			upgradetypes.ModuleName,
+			vestingtypes.ModuleName,
+			quarantine.ModuleName,
+			sanction.ModuleName,
+			hold.ModuleName,
 
-		ibchookstypes.ModuleName,
-		icatypes.ModuleName,
-		icqtypes.ModuleName,
-		wasm.ModuleName,
+			ibchookstypes.ModuleName,
+			icatypes.ModuleName,
+			icqtypes.ModuleName,
+			wasm.ModuleName,
 
-		// attributetypes.ModuleName,
-		markertypes.ModuleName,
-		// msgfeestypes.ModuleName,
-		// metadatatypes.ModuleName,
-		nametypes.ModuleName,
-		// rewardtypes.ModuleName,
-		// triggertypes.ModuleName,
-		oracletypes.ModuleName,
+			attributetypes.ModuleName,
+			markertypes.ModuleName,
+			msgfeestypes.ModuleName,
+			metadatatypes.ModuleName,
+			nametypes.ModuleName,
+			rewardtypes.ModuleName,
+			triggertypes.ModuleName,
+			oracletypes.ModuleName,
 
-		// Last due to v0.44 issue: https://github.com/cosmos/cosmos-sdk/issues/10591
-		authtypes.ModuleName,
+			// Last due to v0.44 issue: https://github.com/cosmos/cosmos-sdk/issues/10591
+			authtypes.ModuleName,
+		)...,
 	)
 
 	app.mm.RegisterInvariants(&app.CrisisKeeper)
@@ -926,38 +970,84 @@ func New(
 	app.mm.RegisterServices(app.configurator)
 
 	app.sm = module.NewSimulationManager(
-		auth.NewAppModule(appCodec, app.AccountKeeper, authsims.RandomGenesisAccounts),
-		bank.NewAppModule(appCodec, app.BankKeeper, app.AccountKeeper),
-		capability.NewAppModule(appCodec, *app.CapabilityKeeper),
-		// feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry),
-		gov.NewAppModule(appCodec, app.GovKeeper, app.AccountKeeper, app.BankKeeper),
-		mint.NewAppModule(appCodec, app.MintKeeper, app.AccountKeeper, nil),
-		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		// slashing.NewAppModule(appCodec, app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		params.NewAppModule(app.ParamsKeeper),
-		// evidence.NewAppModule(app.EvidenceKeeper),
-		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// groupmodule.NewAppModule(appCodec, app.GroupKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// quarantinemodule.NewAppModule(appCodec, app.QuarantineKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		// sanctionmodule.NewAppModule(appCodec, app.SanctionKeeper, app.AccountKeeper, app.BankKeeper, app.GovKeeper, app.interfaceRegistry),
+		applyActiveModules[module.AppModuleSimulation](
+			Pair[string, func() module.AppModuleSimulation]{authtypes.ModuleName, func() module.AppModuleSimulation {
+				return auth.NewAppModule(appCodec, app.AccountKeeper, authsims.RandomGenesisAccounts)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{banktypes.ModuleName, func() module.AppModuleSimulation {
+				return bank.NewAppModule(appCodec, app.BankKeeper, app.AccountKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{capabilitytypes.ModuleName, func() module.AppModuleSimulation { return capability.NewAppModule(appCodec, *app.CapabilityKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{feegrant.ModuleName, func() module.AppModuleSimulation {
+				return feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{govtypes.ModuleName, func() module.AppModuleSimulation {
+				return gov.NewAppModule(appCodec, app.GovKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{minttypes.ModuleName, func() module.AppModuleSimulation {
+				return mint.NewAppModule(appCodec, app.MintKeeper, app.AccountKeeper, nil)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{stakingtypes.ModuleName, func() module.AppModuleSimulation {
+				return staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{distrtypes.ModuleName, func() module.AppModuleSimulation {
+				return distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{slashingtypes.ModuleName, func() module.AppModuleSimulation {
+				return slashing.NewAppModule(appCodec, app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{paramstypes.ModuleName, func() module.AppModuleSimulation { return params.NewAppModule(app.ParamsKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{evidencetypes.ModuleName, func() module.AppModuleSimulation { return evidence.NewAppModule(app.EvidenceKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{authz.ModuleName, func() module.AppModuleSimulation {
+				return authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{group.ModuleName, func() module.AppModuleSimulation {
+				return groupmodule.NewAppModule(appCodec, app.GroupKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{quarantine.ModuleName, func() module.AppModuleSimulation {
+				return quarantinemodule.NewAppModule(appCodec, app.QuarantineKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{sanction.ModuleName, func() module.AppModuleSimulation {
+				return sanctionmodule.NewAppModule(appCodec, app.SanctionKeeper, app.AccountKeeper, app.BankKeeper, app.GovKeeper, app.interfaceRegistry)
+			}},
 
-		// metadata.NewAppModule(appCodec, app.MetadataKeeper, app.AccountKeeper),
-		marker.NewAppModule(appCodec, app.MarkerKeeper, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.GovKeeper, app.AttributeKeeper, app.interfaceRegistry),
-		name.NewAppModule(appCodec, app.NameKeeper, app.AccountKeeper, app.BankKeeper),
-		// attribute.NewAppModule(appCodec, app.AttributeKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper),
-		// msgfeesmodule.NewAppModule(appCodec, app.MsgFeesKeeper, app.interfaceRegistry),
-		// rewardmodule.NewAppModule(appCodec, app.RewardKeeper, app.AccountKeeper, app.BankKeeper),
-		// triggermodule.NewAppModule(appCodec, app.TriggerKeeper, app.AccountKeeper, app.BankKeeper),
-		oraclemodule.NewAppModule(appCodec, app.OracleKeeper, app.AccountKeeper, app.BankKeeper, app.IBCKeeper.ChannelKeeper),
-		// holdmodule.NewAppModule(appCodec, app.HoldKeeper),
-		provwasm.NewWrapper(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper),
+			Pair[string, func() module.AppModuleSimulation]{metadatatypes.ModuleName, func() module.AppModuleSimulation {
+				return metadata.NewAppModule(appCodec, app.MetadataKeeper, app.AccountKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{markertypes.ModuleName, func() module.AppModuleSimulation {
+				return marker.NewAppModule(appCodec, app.MarkerKeeper, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.GovKeeper, app.AttributeKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{nametypes.ModuleName, func() module.AppModuleSimulation {
+				return name.NewAppModule(appCodec, app.NameKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{attributetypes.ModuleName, func() module.AppModuleSimulation {
+				return attribute.NewAppModule(appCodec, app.AttributeKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{msgfeestypes.ModuleName, func() module.AppModuleSimulation {
+				return msgfeesmodule.NewAppModule(appCodec, app.MsgFeesKeeper, app.interfaceRegistry)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{rewardtypes.ModuleName, func() module.AppModuleSimulation {
+				return rewardmodule.NewAppModule(appCodec, app.RewardKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{triggertypes.ModuleName, func() module.AppModuleSimulation {
+				return triggermodule.NewAppModule(appCodec, app.TriggerKeeper, app.AccountKeeper, app.BankKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{oracletypes.ModuleName, func() module.AppModuleSimulation {
+				return oraclemodule.NewAppModule(appCodec, app.OracleKeeper, app.AccountKeeper, app.BankKeeper, app.IBCKeeper.ChannelKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{hold.ModuleName, func() module.AppModuleSimulation { return holdmodule.NewAppModule(appCodec, app.HoldKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{wasm.ModuleName, func() module.AppModuleSimulation {
+				return provwasm.NewWrapper(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper, app.NameKeeper)
+			}},
 
-		// IBC
-		ibc.NewAppModule(app.IBCKeeper),
-		ibchooks.NewAppModule(app.AccountKeeper, *app.IBCHooksKeeper),
-		ibctransfer.NewAppModule(*app.TransferKeeper),
-		icaModule,
+			// IBC
+			Pair[string, func() module.AppModuleSimulation]{ibchost.ModuleName, func() module.AppModuleSimulation { return ibc.NewAppModule(app.IBCKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{ibchookstypes.ModuleName, func() module.AppModuleSimulation {
+				return ibchooks.NewAppModule(app.AccountKeeper, *app.IBCHooksKeeper)
+			}},
+			Pair[string, func() module.AppModuleSimulation]{ibctransfertypes.ModuleName, func() module.AppModuleSimulation { return ibctransfer.NewAppModule(*app.TransferKeeper) }},
+			Pair[string, func() module.AppModuleSimulation]{icatypes.ModuleName, func() module.AppModuleSimulation { return icaModule }},
+		)...,
 	)
 
 	app.sm.RegisterStoreDecoders()
@@ -1046,6 +1136,68 @@ func New(
 	app.ScopedICAHostKeeper = scopedICAHostKeeper
 
 	return app
+}
+
+var activeModules = map[string]bool{
+	upgradetypes.ModuleName:    true,
+	capabilitytypes.ModuleName: true,
+	minttypes.ModuleName:       true,
+	distrtypes.ModuleName:      true,
+	// slashingtypes.ModuleName:    true,
+	// evidencetypes.ModuleName:    true,
+	stakingtypes.ModuleName: true,
+	ibchost.ModuleName:      true,
+	markertypes.ModuleName:  true,
+	icatypes.ModuleName:     true,
+	// attributetypes.ModuleName:   true,
+	// rewardtypes.ModuleName:      true,
+	// triggertypes.ModuleName:     true,
+	authtypes.ModuleName:    true,
+	banktypes.ModuleName:    true,
+	govtypes.ModuleName:     true,
+	crisistypes.ModuleName:  true,
+	genutiltypes.ModuleName: true,
+	authz.ModuleName:        true,
+	// group.ModuleName:            true,
+	// feegrant.ModuleName:         true,
+	paramstypes.ModuleName: true,
+	// msgfeestypes.ModuleName:     true,
+	// metadatatypes.ModuleName:    true,
+	oracletypes.ModuleName:      true,
+	wasm.ModuleName:             true,
+	ibchookstypes.ModuleName:    true,
+	ibctransfertypes.ModuleName: true,
+	icqtypes.ModuleName:         true,
+	nametypes.ModuleName:        true,
+	vestingtypes.ModuleName:     true,
+	// quarantine.ModuleName:       true,
+	// sanction.ModuleName:         true,
+	// hold.ModuleName:             true,
+}
+
+func filterActiveModules(moduleList ...string) []string {
+	var filteredModules = make([]string, 0, len(activeModules))
+	for _, v := range moduleList {
+		if activeModules[v] {
+			filteredModules = append(filteredModules, v)
+		}
+	}
+	return filteredModules
+}
+
+type Pair[T, U any] struct {
+	First  T
+	Second U
+}
+
+func applyActiveModules[T interface{}](moduleList ...Pair[string, func() T]) []T {
+	var filteredModules = make([]T, 0, len(activeModules))
+	for _, v := range moduleList {
+		if activeModules[v.First] {
+			filteredModules = append(filteredModules, v.Second())
+		}
+	}
+	return filteredModules
 }
 
 // GetBaseApp returns the base cosmos app
