@@ -1066,9 +1066,9 @@ func New(
 			AccountKeeper:   app.AccountKeeper,
 			BankKeeper:      app.BankKeeper,
 			SignModeHandler: encodingConfig.TxConfig.SignModeHandler(),
-			// FeegrantKeeper:  app.FeeGrantKeeper,
-			MsgFeesKeeper:  app.MsgFeesKeeper,
-			SigGasConsumer: ante.DefaultSigVerificationGasConsumer,
+			FeegrantKeeper:  app.FeeGrantKeeper,
+			MsgFeesKeeper:   app.MsgFeesKeeper,
+			SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
 		})
 	if err != nil {
 		panic(err)
