@@ -13,7 +13,7 @@ import (
 // cannot be a const unfortunately because it's a custom type.
 func DefaultFloorGasPrice() sdk.Coin {
 	return sdk.Coin{
-		Amount: sdk.NewInt(pioconfig.GetProvenanceConfig().MsgFeeFloorGasPrice),
+		Amount: sdk.NewInt(0), //pioconfig.GetProvenanceConfig().MsgFeeFloorGasPrice),
 		Denom:  pioconfig.GetProvenanceConfig().MsgFloorDenom,
 	}
 }
