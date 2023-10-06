@@ -62,7 +62,7 @@ COPY x/ ./x/
 COPY vendor/ ./vendor/
 
 # Build the binaries
-RUN go build -mod vendor -ldflags '-w -s -X github.com/cosmos/cosmos-sdk/version.Name=Provenance-Blockchain' -o /go/bin/ ./cmd/...
+RUN go build -tags "exclude slashing evidence attribute reward trigger group feegrant msgfees metadata quarantine sanction hold" -mod vendor -ldflags '-w -s -X github.com/cosmos/cosmos-sdk/version.Name=Provenance-Blockchain' -o /go/bin/ ./cmd/...
 
 ## Run provenance for ARM
 FROM debian:bullseye-slim as provenance-arm64
