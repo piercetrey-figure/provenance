@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/cosmos/cosmos-sdk/x/quarantine"
-    "fmt"
+	"fmt"
+	"github.com/cosmos/cosmos-sdk/x/quarantine"
 )
 
 func init() {
-    fmt.Println("Including Module: ", quarantine.ModuleName)
-    ActiveModules[quarantine.ModuleName] = true
+	fmt.Println("Including Module: ", quarantine.ModuleName)
+	ActiveModules[quarantine.ModuleName] = true
 }

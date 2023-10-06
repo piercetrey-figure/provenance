@@ -3,11 +3,11 @@
 package modules
 
 import (
-    rewardtypes "github.com/provenance-io/provenance/x/reward/types"
-    "fmt"
+	"fmt"
+	rewardtypes "github.com/provenance-io/provenance/x/reward/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", rewardtypes.ModuleName)
-    ActiveModules[rewardtypes.ModuleName] = true
+	fmt.Println("Including Module: ", rewardtypes.ModuleName)
+	ActiveModules[rewardtypes.ModuleName] = true
 }

@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/cosmos/cosmos-sdk/x/feegrant"
-    "fmt"
+	"fmt"
+	"github.com/cosmos/cosmos-sdk/x/feegrant"
 )
 
 func init() {
-    fmt.Println("Including Module: ", feegrant.ModuleName)
-    ActiveModules[feegrant.ModuleName] = true
+	fmt.Println("Including Module: ", feegrant.ModuleName)
+	ActiveModules[feegrant.ModuleName] = true
 }

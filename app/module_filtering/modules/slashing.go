@@ -3,11 +3,11 @@
 package modules
 
 import (
-    slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
-    "fmt"
+	"fmt"
+	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", slashingtypes.ModuleName)
-    ActiveModules[slashingtypes.ModuleName] = true
+	fmt.Println("Including Module: ", slashingtypes.ModuleName)
+	ActiveModules[slashingtypes.ModuleName] = true
 }

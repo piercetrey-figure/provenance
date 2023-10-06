@@ -3,11 +3,11 @@
 package modules
 
 import (
-    triggertypes "github.com/provenance-io/provenance/x/trigger/types"
-    "fmt"
+	"fmt"
+	triggertypes "github.com/provenance-io/provenance/x/trigger/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", triggertypes.ModuleName)
-    ActiveModules[triggertypes.ModuleName] = true
+	fmt.Println("Including Module: ", triggertypes.ModuleName)
+	ActiveModules[triggertypes.ModuleName] = true
 }

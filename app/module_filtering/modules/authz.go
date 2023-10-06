@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/cosmos/cosmos-sdk/x/authz"
-    "fmt"
+	"fmt"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 )
 
 func init() {
-    fmt.Println("Including Module: ", authz.ModuleName)
-    ActiveModules[authz.ModuleName] = true
+	fmt.Println("Including Module: ", authz.ModuleName)
+	ActiveModules[authz.ModuleName] = true
 }

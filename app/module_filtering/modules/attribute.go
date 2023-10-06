@@ -3,11 +3,11 @@
 package modules
 
 import (
-    attributetypes "github.com/provenance-io/provenance/x/attribute/types"
-    "fmt"
+	"fmt"
+	attributetypes "github.com/provenance-io/provenance/x/attribute/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", attributetypes.ModuleName)
-    ActiveModules[attributetypes.ModuleName] = true
+	fmt.Println("Including Module: ", attributetypes.ModuleName)
+	ActiveModules[attributetypes.ModuleName] = true
 }

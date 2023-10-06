@@ -3,11 +3,11 @@
 package modules
 
 import (
-    icqtypes "github.com/strangelove-ventures/async-icq/v6/types"
-    "fmt"
+	"fmt"
+	icqtypes "github.com/strangelove-ventures/async-icq/v6/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", icqtypes.ModuleName)
-    ActiveModules[icqtypes.ModuleName] = true
+	fmt.Println("Including Module: ", icqtypes.ModuleName)
+	ActiveModules[icqtypes.ModuleName] = true
 }

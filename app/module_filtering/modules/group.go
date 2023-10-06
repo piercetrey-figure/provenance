@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/cosmos/cosmos-sdk/x/group"
-    "fmt"
+	"fmt"
+	"github.com/cosmos/cosmos-sdk/x/group"
 )
 
 func init() {
-    fmt.Println("Including Module: ", group.ModuleName)
-    ActiveModules[group.ModuleName] = true
+	fmt.Println("Including Module: ", group.ModuleName)
+	ActiveModules[group.ModuleName] = true
 }

@@ -3,11 +3,11 @@
 package modules
 
 import (
-    authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-    "fmt"
+	"fmt"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", authtypes.ModuleName)
-    ActiveModules[authtypes.ModuleName] = true
+	fmt.Println("Including Module: ", authtypes.ModuleName)
+	ActiveModules[authtypes.ModuleName] = true
 }

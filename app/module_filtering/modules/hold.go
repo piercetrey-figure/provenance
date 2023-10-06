@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/provenance-io/provenance/x/hold"
-    "fmt"
+	"fmt"
+	"github.com/provenance-io/provenance/x/hold"
 )
 
 func init() {
-    fmt.Println("Including Module: ", hold.ModuleName)
-    ActiveModules[hold.ModuleName] = true
+	fmt.Println("Including Module: ", hold.ModuleName)
+	ActiveModules[hold.ModuleName] = true
 }

@@ -1,13 +1,13 @@
 //go:build (include && mint) || (exclude && !mint)
 
 package modules
-    
+
 import (
-    minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
-    "fmt"
+	"fmt"
+	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", minttypes.ModuleName)
-    ActiveModules[minttypes.ModuleName] = true
+	fmt.Println("Including Module: ", minttypes.ModuleName)
+	ActiveModules[minttypes.ModuleName] = true
 }

@@ -3,11 +3,11 @@
 package modules
 
 import (
-    ibchookstypes "github.com/provenance-io/provenance/x/ibchooks/types"
-    "fmt"
+	"fmt"
+	ibchookstypes "github.com/provenance-io/provenance/x/ibchooks/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", ibchookstypes.ModuleName)
-    ActiveModules[ibchookstypes.ModuleName] = true
+	fmt.Println("Including Module: ", ibchookstypes.ModuleName)
+	ActiveModules[ibchookstypes.ModuleName] = true
 }

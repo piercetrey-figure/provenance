@@ -3,11 +3,11 @@
 package modules
 
 import (
-    "github.com/CosmWasm/wasmd/x/wasm"
-    "fmt"
+	"fmt"
+	"github.com/CosmWasm/wasmd/x/wasm"
 )
 
 func init() {
-    fmt.Println("Including Module: ", wasm.ModuleName)
-    ActiveModules[wasm.ModuleName] = true
+	fmt.Println("Including Module: ", wasm.ModuleName)
+	ActiveModules[wasm.ModuleName] = true
 }

@@ -3,11 +3,11 @@
 package modules
 
 import (
-    stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-    "fmt"
+	"fmt"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", stakingtypes.ModuleName)
-    ActiveModules[stakingtypes.ModuleName] = true
+	fmt.Println("Including Module: ", stakingtypes.ModuleName)
+	ActiveModules[stakingtypes.ModuleName] = true
 }

@@ -3,11 +3,11 @@
 package modules
 
 import (
-    distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
-    "fmt"
+	"fmt"
+	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", distrtypes.ModuleName)
-    ActiveModules[distrtypes.ModuleName] = true
+	fmt.Println("Including Module: ", distrtypes.ModuleName)
+	ActiveModules[distrtypes.ModuleName] = true
 }

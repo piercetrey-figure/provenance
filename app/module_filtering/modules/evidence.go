@@ -3,11 +3,11 @@
 package modules
 
 import (
-    evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
-    "fmt"
+	"fmt"
+	evidencetypes "github.com/cosmos/cosmos-sdk/x/evidence/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", evidencetypes.ModuleName)
-    ActiveModules[evidencetypes.ModuleName] = true
+	fmt.Println("Including Module: ", evidencetypes.ModuleName)
+	ActiveModules[evidencetypes.ModuleName] = true
 }

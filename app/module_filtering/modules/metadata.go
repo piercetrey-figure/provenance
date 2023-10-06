@@ -3,11 +3,11 @@
 package modules
 
 import (
-    metadatatypes "github.com/provenance-io/provenance/x/metadata/types"
-    "fmt"
+	"fmt"
+	metadatatypes "github.com/provenance-io/provenance/x/metadata/types"
 )
 
 func init() {
-    fmt.Println("Including Module: ", metadatatypes.ModuleName)
-    ActiveModules[metadatatypes.ModuleName] = true
+	fmt.Println("Including Module: ", metadatatypes.ModuleName)
+	ActiveModules[metadatatypes.ModuleName] = true
 }
