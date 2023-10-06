@@ -3,7 +3,7 @@ package modules
 var ActiveModules = map[string]bool{}
 EOF
 
-cat << EOF > modules/upgradetypes.go
+cat << EOF > modules/upgrade.go
 //go:build (include && upgrade) || (exclude && !upgrade)
 
 package modules
@@ -18,7 +18,7 @@ func init() {
     ActiveModules[upgradetypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/capabilitytypes.go
+cat << EOF > modules/capability.go
 //go:build (include && capability) || (exclude && !capability)
 
 package modules
@@ -33,7 +33,7 @@ func init() {
     ActiveModules[capabilitytypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/minttypes.go
+cat << EOF > modules/mint.go
 //go:build (include && mint) || (exclude && !mint)
 
 package modules
@@ -48,7 +48,7 @@ func init() {
     ActiveModules[minttypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/distrtypes.go
+cat << EOF > modules/distr.go
 //go:build (include && distr) || (exclude && !distr)
 
 package modules
@@ -63,7 +63,7 @@ func init() {
     ActiveModules[distrtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/slashingtypes.go
+cat << EOF > modules/slashing.go
 //go:build (include && slashing) || (exclude && !slashing)
 
 package modules
@@ -78,7 +78,7 @@ func init() {
     ActiveModules[slashingtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/evidencetypes.go
+cat << EOF > modules/evidence.go
 //go:build (include && evidence) || (exclude && !evidence)
 
 package modules
@@ -93,7 +93,7 @@ func init() {
     ActiveModules[evidencetypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/stakingtypes.go
+cat << EOF > modules/staking.go
 //go:build (include && staking) || (exclude && !staking)
 
 package modules
@@ -123,7 +123,7 @@ func init() {
     ActiveModules[ibchost.ModuleName] = true
 }
 EOF
-cat << EOF > modules/markertypes.go
+cat << EOF > modules/marker.go
 //go:build (include && marker) || (exclude && !marker)
 
 package modules
@@ -138,7 +138,7 @@ func init() {
     ActiveModules[markertypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/icatypes.go
+cat << EOF > modules/ica.go
 //go:build (include && ica) || (exclude && !ica)
 
 package modules
@@ -153,7 +153,7 @@ func init() {
     ActiveModules[icatypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/attributetypes.go
+cat << EOF > modules/attribute.go
 //go:build (include && attribute) || (exclude && !attribute)
 
 package modules
@@ -168,7 +168,7 @@ func init() {
     ActiveModules[attributetypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/rewardtypes.go
+cat << EOF > modules/reward.go
 //go:build (include && reward) || (exclude && !reward)
 
 package modules
@@ -183,7 +183,7 @@ func init() {
     ActiveModules[rewardtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/triggertypes.go
+cat << EOF > modules/trigger.go
 //go:build (include && trigger) || (exclude && !trigger)
 
 package modules
@@ -198,7 +198,7 @@ func init() {
     ActiveModules[triggertypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/authtypes.go
+cat << EOF > modules/auth.go
 //go:build (include && auth) || (exclude && !auth)
 
 package modules
@@ -213,7 +213,7 @@ func init() {
     ActiveModules[authtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/banktypes.go
+cat << EOF > modules/bank.go
 //go:build (include && bank) || (exclude && !bank)
 
 package modules
@@ -228,7 +228,7 @@ func init() {
     ActiveModules[banktypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/govtypes.go
+cat << EOF > modules/gov.go
 //go:build (include && gov) || (exclude && !gov)
 
 package modules
@@ -243,7 +243,7 @@ func init() {
     ActiveModules[govtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/crisistypes.go
+cat << EOF > modules/crisis.go
 //go:build (include && crisis) || (exclude && !crisis)
 
 package modules
@@ -258,7 +258,7 @@ func init() {
     ActiveModules[crisistypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/genutiltypes.go
+cat << EOF > modules/genutil.go
 //go:build (include && genutil) || (exclude && !genutil)
 
 package modules
@@ -318,7 +318,7 @@ func init() {
     ActiveModules[feegrant.ModuleName] = true
 }
 EOF
-cat << EOF > modules/paramstypes.go
+cat << EOF > modules/params.go
 //go:build (include && params) || (exclude && !params)
 
 package modules
@@ -333,7 +333,7 @@ func init() {
     ActiveModules[paramstypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/msgfeestypes.go
+cat << EOF > modules/msgfees.go
 //go:build (include && msgfees) || (exclude && !msgfees)
 
 package modules
@@ -348,7 +348,7 @@ func init() {
     ActiveModules[msgfeestypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/metadatatypes.go
+cat << EOF > modules/metadata.go
 //go:build (include && metadata) || (exclude && !metadata)
 
 package modules
@@ -363,7 +363,7 @@ func init() {
     ActiveModules[metadatatypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/oracletypes.go
+cat << EOF > modules/oracle.go
 //go:build (include && oracle) || (exclude && !oracle)
 
 package modules
@@ -393,7 +393,7 @@ func init() {
     ActiveModules[wasm.ModuleName] = true
 }
 EOF
-cat << EOF > modules/ibchookstypes.go
+cat << EOF > modules/ibchooks.go
 //go:build (include && ibchooks) || (exclude && !ibchooks)
 
 package modules
@@ -408,7 +408,7 @@ func init() {
     ActiveModules[ibchookstypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/ibctransfertypes.go
+cat << EOF > modules/ibctransfer.go
 //go:build (include && ibctransfer) || (exclude && !ibctransfer)
 
 package modules
@@ -423,7 +423,7 @@ func init() {
     ActiveModules[ibctransfertypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/icqtypes.go
+cat << EOF > modules/icq.go
 //go:build (include && icq) || (exclude && !icq)
 
 package modules
@@ -438,7 +438,7 @@ func init() {
     ActiveModules[icqtypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/nametypes.go
+cat << EOF > modules/name.go
 //go:build (include && name) || (exclude && !name)
 
 package modules
@@ -453,7 +453,7 @@ func init() {
     ActiveModules[nametypes.ModuleName] = true
 }
 EOF
-cat << EOF > modules/vestingtypes.go
+cat << EOF > modules/vesting.go
 //go:build (include && vesting) || (exclude && !vesting)
 
 package modules
