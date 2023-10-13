@@ -14,7 +14,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", upgradetypes.ModuleName)
+
     ActiveModules[upgradetypes.ModuleName] = true
 }
 EOF
@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", capabilitytypes.ModuleName)
+
     ActiveModules[capabilitytypes.ModuleName] = true
 }
 EOF
@@ -44,7 +44,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", minttypes.ModuleName)
+
     ActiveModules[minttypes.ModuleName] = true
 }
 EOF
@@ -59,7 +59,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", distrtypes.ModuleName)
+
     ActiveModules[distrtypes.ModuleName] = true
 }
 EOF
@@ -74,7 +74,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", slashingtypes.ModuleName)
+
     ActiveModules[slashingtypes.ModuleName] = true
 }
 EOF
@@ -89,7 +89,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", evidencetypes.ModuleName)
+
     ActiveModules[evidencetypes.ModuleName] = true
 }
 EOF
@@ -104,7 +104,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", stakingtypes.ModuleName)
+
     ActiveModules[stakingtypes.ModuleName] = true
 }
 EOF
@@ -119,7 +119,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", ibchost.ModuleName)
+
     ActiveModules[ibchost.ModuleName] = true
 }
 EOF
@@ -134,7 +134,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", markertypes.ModuleName)
+
     ActiveModules[markertypes.ModuleName] = true
 }
 EOF
@@ -149,7 +149,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", icatypes.ModuleName)
+
     ActiveModules[icatypes.ModuleName] = true
 }
 EOF
@@ -164,7 +164,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", attributetypes.ModuleName)
+
     ActiveModules[attributetypes.ModuleName] = true
 }
 EOF
@@ -179,7 +179,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", rewardtypes.ModuleName)
+
     ActiveModules[rewardtypes.ModuleName] = true
 }
 EOF
@@ -194,7 +194,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", triggertypes.ModuleName)
+
     ActiveModules[triggertypes.ModuleName] = true
 }
 EOF
@@ -209,7 +209,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", authtypes.ModuleName)
+
     ActiveModules[authtypes.ModuleName] = true
 }
 EOF
@@ -224,7 +224,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", banktypes.ModuleName)
+
     ActiveModules[banktypes.ModuleName] = true
 }
 EOF
@@ -239,7 +239,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", govtypes.ModuleName)
+
     ActiveModules[govtypes.ModuleName] = true
 }
 EOF
@@ -254,7 +254,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", crisistypes.ModuleName)
+
     ActiveModules[crisistypes.ModuleName] = true
 }
 EOF
@@ -269,7 +269,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", genutiltypes.ModuleName)
+
     ActiveModules[genutiltypes.ModuleName] = true
 }
 EOF
@@ -284,7 +284,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", authz.ModuleName)
+
     ActiveModules[authz.ModuleName] = true
 }
 EOF
@@ -299,7 +299,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", group.ModuleName)
+
     ActiveModules[group.ModuleName] = true
 }
 EOF
@@ -314,7 +314,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", feegrant.ModuleName)
+
     ActiveModules[feegrant.ModuleName] = true
 }
 EOF
@@ -329,7 +329,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", paramstypes.ModuleName)
+
     ActiveModules[paramstypes.ModuleName] = true
 }
 EOF
@@ -344,7 +344,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", msgfeestypes.ModuleName)
+
     ActiveModules[msgfeestypes.ModuleName] = true
 }
 EOF
@@ -359,7 +359,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", metadatatypes.ModuleName)
+
     ActiveModules[metadatatypes.ModuleName] = true
 }
 EOF
@@ -374,7 +374,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", oracletypes.ModuleName)
+
     ActiveModules[oracletypes.ModuleName] = true
 }
 EOF
@@ -389,7 +389,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", wasm.ModuleName)
+
     ActiveModules[wasm.ModuleName] = true
 }
 EOF
@@ -404,7 +404,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", ibchookstypes.ModuleName)
+
     ActiveModules[ibchookstypes.ModuleName] = true
 }
 EOF
@@ -419,7 +419,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", ibctransfertypes.ModuleName)
+
     ActiveModules[ibctransfertypes.ModuleName] = true
 }
 EOF
@@ -434,7 +434,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", icqtypes.ModuleName)
+
     ActiveModules[icqtypes.ModuleName] = true
 }
 EOF
@@ -449,7 +449,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", nametypes.ModuleName)
+
     ActiveModules[nametypes.ModuleName] = true
 }
 EOF
@@ -464,7 +464,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", vestingtypes.ModuleName)
+
     ActiveModules[vestingtypes.ModuleName] = true
 }
 EOF
@@ -479,7 +479,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", quarantine.ModuleName)
+
     ActiveModules[quarantine.ModuleName] = true
 }
 EOF
@@ -494,7 +494,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", sanction.ModuleName)
+
     ActiveModules[sanction.ModuleName] = true
 }
 EOF
@@ -509,7 +509,7 @@ import (
 )
 
 func init() {
-    fmt.Println("Including Module: ", hold.ModuleName)
+
     ActiveModules[hold.ModuleName] = true
 }
 EOF
